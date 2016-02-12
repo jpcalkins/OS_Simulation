@@ -23,9 +23,15 @@ public class Block implements Comparable<Block> {
         this.occupied = false;
         this.job = null;
     }
-    public void addJob(Job job){
+    public Block addJobToBlock(Job job){
         this.occupied = true;
         this.job = job;
+        if(job.size < this.size){
+            this.size = job.size;
+            return new Block(this.size - job.size);
+        }else{
+            return null;
+        }
     }
     public int compareTo(Block other){
         return Integer.compare(this.size, other.size);

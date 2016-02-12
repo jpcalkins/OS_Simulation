@@ -2,15 +2,27 @@
  * Created by Jacob on 2/5/16.
  */
 public class Timer {
-    public int time;
+    public int currentTime;
+    public int previousTime;
 
     public Timer(){
-        this.time = 0;
+        this.currentTime = 0;
+        this.previousTime = 0;
     }
-    public void incrementTime(){
-        this.time++;
+    public Timer(int time){
+        this.currentTime = time;
+        this.previousTime = 0;
     }
-    public int getTime(){
-        return time;
+//    public void incrementTime(){
+//        this.currentTime++;
+//    }
+    public void incrementCurrentTime(int increment){
+        this.currentTime += increment;
+    }
+    public void incrementPrevTime(int increment){
+        this.previousTime += increment;
+    }
+    public int getCurrentTime(){
+        return currentTime;
     }
 }
