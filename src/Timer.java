@@ -13,16 +13,16 @@ public class Timer {
         this.currentTime = time;
         this.previousTime = 0;
     }
-//    public void incrementTime(){
-//        this.currentTime++;
-//    }
     public void incrementCurrentTime(int increment){
         this.currentTime += increment;
     }
     public void incrementPrevTime(int increment){
         this.previousTime += increment;
     }
-    public int getCurrentTime(){
-        return currentTime;
+    public void returnToPresent(){
+        if(previousTime < currentTime){
+            this.previousTime = this.currentTime;
+        }
+        //this.previousTime = this.currentTime;
     }
 }
