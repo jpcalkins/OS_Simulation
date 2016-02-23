@@ -19,7 +19,7 @@ public class Job {
         this.process = true;
         //this.priority = priority;
     }
-    public Job(int size, int duration, int toa, boolean process){
+    public Job(int size, int duration, int toa, boolean process){//, int priority){
         this.size = size;
         this.duration = duration;
         this.toa = toa;

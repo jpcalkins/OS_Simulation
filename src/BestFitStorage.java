@@ -1,3 +1,5 @@
+import java.util.ConcurrentModificationException;
+
 /**
  * Created by Jacob on 2/5/16.
  */
@@ -12,4 +14,5 @@ public class BestFitStorage extends StorageStrategy {
             }
         }
     }
+
 }
