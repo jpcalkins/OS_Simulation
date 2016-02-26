@@ -1,20 +1,28 @@
-import java.util.ConcurrentModificationException;
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Main {
 
     public static Timer time = new Timer();
-    public static StorageStrategy test = new StorageStrategy();
-    public static BestFitStorage bestFit = new BestFitStorage();
-    public static FirstFitStorage firstFit = new FirstFitStorage();
-    public static WorstFitStorage worstFit = new WorstFitStorage();
+    public static BestFitStorage bestFit;
+    public static FirstFitStorage firstFit;
+    public static WorstFitStorage worstFit;
 
     public static void main(String[] args) {
-        int jobNumber = 0;
-        Queue<Job> readyQueue = new LinkedList<Job>();
-        Job firstJob = Job.randJob();
-        time.incrementCurrentTime(firstJob.toa+firstJob.duration);
+        if (args[0].equals("b")) {
+            bestFit = new BestFitStorage();
+            bestFit.startComputer();
+        } else if (args[0].equals("f")) {
+            firstFit = new FirstFitStorage();
+            firstFit.startComputer();
+        } else if (args[0].equals("w")) {
+            worstFit = new WorstFitStorage();
+            worstFit.startComputer();
+        } else {
+            System.out.println("How to use program.");
+        }
+    }
+        //int jobNumber = 0;
+        //Queue<Job> readyQueue = new LinkedList<Job>();
+//        Job firstJob = Job.randJob();
+//        time.incrementCurrentTime(firstJob.toa+firstJob.duration);
 //        while (time.currentTime <= 5000) {
 //            Job upcomingJob = Job.randJob();
 //            int largestBlockSize = test.getLargestBlock().size;
@@ -41,16 +49,10 @@ public class Main {
 //            //addJobToMemory(upcomingJob);
 //            //time.incrementCurrentTime(firstJob.duration);
 //        }
-    }
-    public static void addJobToMemory(Job job){
-        bestFit.addJob(job);
-        firstFit.addJob(job);
-        worstFit.addJob(job);
-    }
-    public static Queue<Job> processReadyQueue(Queue<Job> input){
-        while(input.peek() != null && input.peek().size <= test.getLargestOpenBlock().size){
-            test.addJob(input.poll());
-        }
-       return input;
-    }
+//    public static Queue<Job> processReadyQueue(Queue<Job> input){
+//        while(input.peek() != null && input.peek().size <= test.getLargestOpenBlock().size){
+//            test.addJob(input.poll());
+//        }
+//       return input;
+//    }
 }

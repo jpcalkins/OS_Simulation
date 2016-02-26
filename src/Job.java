@@ -10,6 +10,7 @@ public class Job {
     public int toa;
     public int startWaitTime;
     public boolean process;
+    public long timeStamp;
     //public int priority;
 
     public Job(int size, int duration, int toa){
@@ -17,15 +18,22 @@ public class Job {
         this.duration = duration;
         this.toa = toa;
         this.process = true;
-        //this.priority = priority;
+        this.timeStamp = System.currentTimeMillis();
     }
-    public Job(int size, int duration, int toa, boolean process){//, int priority){
+    public Job(int size, int duration, int toa, boolean process){
+        this.size = size;
+        this.duration = duration;
+        this.toa = toa;
+        this.process = process;
+        this.timeStamp = System.currentTimeMillis();
+    }
+    public Job(int size, int duration, int toa, boolean process, int time){
         this.size = size;
         this.duration = duration;
         this.toa = toa;
         this.process = true;
-        //this.priority = priority;
         this.process = process;
+        this.timeStamp = time;
     }
     public int getSize(){
         return size;
@@ -40,14 +48,11 @@ public class Job {
         this.startWaitTime = time;
     }
 
-    //public static Job randJob(int jobNumber){
-        //return new Job(randSize(), randDuration(), randTOA(), jobNumber);
-    //}
-    public static Job randJob(){
-        return new Job(randSize(), randDuration(), randTOA());
-    }
     public static Job randJob(int time){
         return new Job(randSize(), randDuration(), randTOA()+time);
+    }
+    public static Job randJob(){
+        return new Job(randSize(), randDuration(), randTOA(), true);
     }
     public static int randSize(){
         int minSize = 5;
