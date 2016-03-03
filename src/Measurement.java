@@ -19,18 +19,18 @@ public class Measurement {
         this.avgHoleSize = 0;
         this.rejectedJobs = 0;
     }
-
+    //For printing stats at 1000VTU intervals
     public void output1000(){
         System.out.println("Rejected Jobs:\t" + rejectedJobs);
         output100();
     }
-
+    //For printing stats at 100VTU intervals
     public void output100(){
         System.out.println("Storage Utilization:\t" + storageUtilization +
         "\nExternal Fragmentation:\t" + fragmentation +
         "\nAverage Hole Size:\t" + avgHoleSize);
     }
-
+    //For printing stats at 4000VTU timepoint
     public void output4000(){
         System.out.println("Average Turnaround Time:\t" + avgTurnaround +
         "\nWaiting Time:\t" + avgWaitTime +

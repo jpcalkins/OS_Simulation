@@ -13,12 +13,11 @@ abstract public class StorageStrategy {
 
     public StorageStrategy(){
         //this.stats = new Measurement();
-        this.time = new Timer();
+        time = new Timer();
         this.processQueue = new LinkedList<Long>();
         this.readyQueue = new LinkedList<Job>();
         this.memory = new ArrayList<Block>();
         memory.add(new Block(1800));
-        //memory.add(new Block(new Job(200, 0, 0, false)));
     }
 
     abstract public void startComputer();
@@ -27,6 +26,7 @@ abstract public class StorageStrategy {
     public void generateJobs(){
         //Checks if there are any jobs that have been waiting for a memory hole to open.
         if(readyQueue.size() >= 1) {
+            //Sets memory timeline to present CPU event
             time.returnToPresent();
             Job temp = readyQueue.poll();
             temp.setStartWaitTime(time.previousTime);
@@ -57,22 +57,27 @@ abstract public class StorageStrategy {
         }
     }
     public void processReadyQueue(){
+        //Moves jobs to memory from ready Queue
         while(readyQueue.size() > 0){
+            //adds job to memory if there is an open block.
             if(readyQueue.peek().size <= this.getLargestOpenBlock().size){
                 addJob(readyQueue.poll());
-            }else{
+            //Clears everything after the first job in readyQueue because it is waiting for an occupied block to open
+            }else if(readyQueue.peek().size <= this.getLargestBlock().size){
                 Job temp = readyQueue.poll();
                 readyQueue.clear();
                 readyQueue.add(temp);
                 return;
+            //rejects job if there is not a large enough block in memory
+            }else{
+                readyQueue.poll();
+                time.stats.rejectedJobs++;
             }
-
         }
-
     }
     public Block getLargestOpenBlock(){
         Block largestOpenBlock = memory.get(0);
-        for(int i=1; i<memory.size()-1; i++){
+        for(int i=1; i<memory.size(); i++){
             if(memory.get(i).size > largestOpenBlock.size && !memory.get(i).occupied){
                 largestOpenBlock = memory.get(i);
             }
@@ -88,19 +93,21 @@ abstract public class StorageStrategy {
         }
         return largestBlock;
     }
-    public void ejectFromMemory(long id){
-        for(int i=0; i<memory.size(); i++){
-            if(memory.get(i).occupied && memory.get(i).job.timeStamp == id){
-                memory.get(i).removeJob();
-                break;
-            }
-        }
-    }
+    //Simulates a job entering the CPU and moves my program to the next event, process leaving the CPU.
     public void runProcess(long id){
         for(int i=0; i<memory.size(); i++){
             if(memory.get(i).occupied && memory.get(i).job.timeStamp == id){
                 time.incrementCurrentTime(memory.get(i).job.duration);
                 ejectFromMemory(id);
+                break;
+            }
+        }
+    }
+    //Clears a job from memory since it has been processed through the CPU
+    public void ejectFromMemory(long id){
+        for(int i=0; i<memory.size(); i++){
+            if(memory.get(i).occupied && memory.get(i).job.timeStamp == id){
+                memory.get(i).removeJob();
                 break;
             }
         }

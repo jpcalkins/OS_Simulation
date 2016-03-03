@@ -10,10 +10,6 @@ public class Block implements Comparable<Block> {
         this.size = size;
         this.occupied = false;
     }
-    public Block(int size, boolean occupied){
-        this.size = size;
-        this.occupied = occupied;
-    }
     public Block(Job job){
         this.size = job.size;
         this.job = job;
@@ -29,24 +25,15 @@ public class Block implements Comparable<Block> {
         if(job.size < this.size){
             int prevSize = this.size;
             this.size = job.size;
+            //returns new block of memory that is the remainder from added job
             return new Block(prevSize - job.size);
         }else{
+            //job fit perfectly in block so no creation of new block necessary.
             return null;
         }
     }
+    //comparable constructor so that I may compare block objects using <, >, =. This is necessary to keep an ordered list for best and worst fit allocation.
     public int compareTo(Block other){
         return Integer.compare(this.size, other.size);
-    }
-    public void setSize(int size){
-        this.size = size;
-    }
-    public int getSize(){
-        return size;
-    }
-    public void setOccupied(boolean occupied){
-        this.occupied = occupied;
-    }
-    public boolean isOccupied(){
-        return occupied;
     }
 }
