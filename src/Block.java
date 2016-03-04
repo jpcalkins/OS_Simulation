@@ -10,11 +10,6 @@ public class Block implements Comparable<Block> {
         this.size = size;
         this.occupied = false;
     }
-    public Block(Job job){
-        this.size = job.size;
-        this.job = job;
-        this.occupied = true;
-    }
     public void removeJob(){
         this.occupied = false;
         this.job = null;
