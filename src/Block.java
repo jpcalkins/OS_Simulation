@@ -1,5 +1,10 @@
 /**
- * Created by Jacob on 2/5/16.
+ * a. Jacob Calkins
+ * b. CS 4323
+ * c. Simulation Project, Phase 1
+ * d. Sarath Kumar Maddinani
+ * e. occupied boolean makes for a quick check as to whether the block is open
+ * f. Represents a block in memory and the job that may be occupying that block.
  */
 public class Block implements Comparable<Block> {
     public int size;

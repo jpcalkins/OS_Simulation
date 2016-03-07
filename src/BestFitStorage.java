@@ -1,16 +1,18 @@
+/**
+ * a. Jacob Calkins
+ * b. CS 4323
+ * c. Simulation Project, Phase 1
+ * d. Sarath Kumar Maddinani
+ * e. Inherits from StorageStrategy
+ * f. Class that implements a best-fit memory allocation strategy.
+ * g. Sorts memory blocks to make finding the proper open block easier.
+ */
 import java.util.Collections;
 
-/**
- * Created by Jacob on 2/5/16.
- */
 public class BestFitStorage extends StorageStrategy {
-
+    //Sorts memory into ascending order based on block size, then traverses the list to find the first open block, giving me the smallest possible block to place the job.
     public void addJob(Job incomingJob){
         Collections.sort(memory);
-//        for(int j=0; j<memory.size(); j++){
-//            System.out.println("Size: " + memory.get(j).size + " Occupied: " + memory.get(j).occupied);
-//        }
-//        System.out.println();
         for(int i=0; i<memory.size(); i++){
             if(memory.get(i).size >= incomingJob.size && !memory.get(i).occupied){
                 Block temp = memory.get(i).addJobToBlock(incomingJob);

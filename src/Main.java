@@ -1,6 +1,13 @@
+/**
+ * a. Jacob Calkins
+ * b. CS 4323
+ * c. Simulation Project, Phase 1
+ * d. Sarath Kumar Maddinani
+ * e. bestFit, firstFit, and worstfit are the different memory allocation strategies and are called based upon flags passed at program startup.
+ * f. Main class that starts the "computer" with the desired memory allocation strategy.
+ */
 public class Main {
 
-    //public static Timer time = new Timer();
     public static BestFitStorage bestFit;
     public static FirstFitStorage firstFit;
     public static WorstFitStorage worstFit;

@@ -1,8 +1,14 @@
+/**
+ * a. Jacob Calkins
+ * b. CS 4323
+ * c. Simulation Project, Phase 1
+ * d. Sarath Kumar Maddinani
+ * e. timeStamp is used to id processes and keep track of arrival so they may be executed in that same order.
+ * f. This class simulates a process and can create random copies of itself for testing.
+ * g. Class could have been named Process, as that is what it is mimicking, but this was already implemented before learning proper terminology.
+ */
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Created by Jacob on 2/5/16.
- */
 public class Job {
     public int size;
     public int duration;
@@ -10,15 +16,14 @@ public class Job {
     public int toa;
     //So that I may compute avg. wait time, I only track VTU at which job started waiting then calculate difference from CPU time when processing job.
     public int startWaitTime;
-    //public boolean process;
     public long timeStamp;
 
-    public Job(int size, int duration, int toa){
-        this.size = size;
-        this.duration = duration;
-        this.toa = toa;
-        this.timeStamp = System.currentTimeMillis();
-    }
+//    public Job(int size, int duration, int toa){
+//        this.size = size;
+//        this.duration = duration;
+//        this.toa = toa;
+//        this.timeStamp = System.currentTimeMillis();
+//    }
     public Job(int size, int duration, int toa, int time){
         this.size = size;
         this.duration = duration;
@@ -34,9 +39,9 @@ public class Job {
     public static Job randJob(int time){
         return new Job(randSize(), randDuration(), randTOA(), time);
     }
-    public static Job randJob(){
-        return new Job(randSize(), randDuration(), randTOA());
-    }
+    //public static Job randJob(){
+        //return new Job(randSize(), randDuration(), randTOA());
+    //}
     public static int randSize(){
         int minSize = 5;
         int maxSize = 31;

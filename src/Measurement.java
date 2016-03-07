@@ -1,14 +1,21 @@
+/**
+ * a. Jacob Calkins
+ * b. CS 4323
+ * c. Simulation Project, Phase 1
+ * d. Sarath Kumar Maddinani
+ * e. rejectedjobs, totaljobs, totalWaitTime, and totalProcessingTime keeps a running total throughout program operation for means of calculate statistics.
+ * f. Class calculates statistics of how memory is utilized.
+ */
 import java.util.ArrayList;
 
-/**
- * Created by Jacob on 2/5/16.
- */
 public class Measurement {
     public int rejectedJobs;
     public int totalJobs;
     public int totalWaitTime;
     public int totalProcessingTime;
+    //Total system memory, used to calculate average hole size and storage utilization.
     private final int TOTALMEMORY = 1800;
+    //Smallest possible jobs size, used to calculate external fragmentation.
     private final int SMALLESTJOB = 50;
 
     public Measurement(){
@@ -34,6 +41,7 @@ public class Measurement {
                 spaceOccupied += memory.get(i).size;
             }
         }
+        //spaceOccupied and totalmemory must be cast to doubles to avoid integer division, multiply by 100 to get percentage, and cast back to int to round to whole number
         return (int)(((double)spaceOccupied/(double)TOTALMEMORY)*100);
     }
     public int getExternalFragmentation(){
@@ -50,7 +58,7 @@ public class Measurement {
         ArrayList<Block> memory = StorageStrategy.getMemory();
         return (TOTALMEMORY/memory.size());
     }
-    //For printing stats at 1000VTU intervals
+    //For printing stats at 1000VTU intervals, because 1000 is also a multiple of 100, I print the stats for 100 VTU intervals as well.
     public void output1000(){
         System.out.println("Rejected Jobs:\t" + rejectedJobs);
         output100();
@@ -61,7 +69,7 @@ public class Measurement {
         "\nExternal Fragmentation:\t" + getExternalFragmentation() +
         "\nAverage Hole Size:\t" + getAvgHoleSize());
     }
-    //For printing stats at 4000VTU timepoint
+    //For printing stats at 4000VTU time point
     public void output4000(){
         System.out.println("Printing stats for time point 4000 VTUs" +
         "\nAverage Turnaround Time:\t" + getAvgTurnaround() +

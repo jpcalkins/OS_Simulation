@@ -1,10 +1,14 @@
 /**
- * Created by Jacob on 2/5/16.
+ * a. Jacob Calkins
+ * b. CS 4323
+ * c. Simulation Project, Phase 1
+ * d. Sarath Kumar Maddinani
+ * e. Time is my custom CPU clock, memory is an array of blocks that can grow as necessary, readyQueue is a list of jobs not yet in memory, processQueue is a list of job timestamps that allows me to keep track of which processes arrived when.
+ * f. Class that memory allocation strategies inherit from. Lays out most of the basic functionality of the simulation.
  */
 import java.util.*;
 
 abstract public class StorageStrategy {
-    //public Measurement stats;
     public Timer time;
     public static ArrayList<Block> memory;
     public Queue<Job> readyQueue;
@@ -14,16 +18,15 @@ abstract public class StorageStrategy {
     abstract public void addJob(Job incomingJob);
 
     public StorageStrategy(){
-        //this.stats = new Measurement();
         time = new Timer();
         this.processQueue = new LinkedList<Long>();
         this.readyQueue = new LinkedList<Job>();
         memory = new ArrayList<Block>();
         memory.add(new Block(1800));
     }
-
+    //Starts the simulation and keeps the simulation running.
     public void startComputer(){
-        Job firstJob = Job.randJob();
+        Job firstJob = Job.randJob(0);
         addJob(firstJob);
         time.incrementCurrentTime(firstJob.toa+firstJob.duration);
         ejectFromMemory(processQueue.poll());
@@ -32,15 +35,9 @@ abstract public class StorageStrategy {
             if(processQueue.peek() != null){
                 runProcess(processQueue.poll());
             }
-//            else if(time.getCurrentTime() == time.getPreviousTime()){
-//                firstJob = Job.randJob();
-//                addJob(firstJob);
-//                time.incrementCurrentTime(firstJob.toa + firstJob.duration);
-//                ejectFromMemory(processQueue.poll());
-//            }
         }
     }
-
+    //Creates random jobs and adds them to readyQueue accordingly.
     public void generateJobs(){
         //Checks if there are any jobs that have been waiting for a memory hole to open.
         if(readyQueue.size() >= 1) {
@@ -56,17 +53,14 @@ abstract public class StorageStrategy {
         }
         Job upcomingJob = Job.randJob(time.getPreviousTime());
         int largestBlockSize = getLargestBlock().size;
+        //Special case that occurs when memory events catch up to CPU events and there is nothing in the readyQueue because memory has become too fragmented and majority of jobs are too large.
         if(time.getCurrentTime() == time.getPreviousTime() && readyQueue.peek() == null){
             while(upcomingJob.size > largestBlockSize) {
                 time.stats.rejectedJobs++;
                 upcomingJob = Job.randJob(time.getPreviousTime());
                 time.incrementCurrentTime(upcomingJob.toa);
                 time.incrementPrevTime(upcomingJob.toa);
-                try {
-                    readyQueue.add(upcomingJob);
-                } catch (ConcurrentModificationException e) {
-                    System.out.println("ConcurrentModificationException whatever that means.");
-                }
+                readyQueue.add(upcomingJob);
             }
         }else{
             //Checks that there is any possible block to place a job & checks if job was originated before the last event
@@ -78,11 +72,8 @@ abstract public class StorageStrategy {
                     upcomingJob = Job.randJob(time.getPreviousTime());
                     continue;
                 }
-                try {
-                    readyQueue.add(upcomingJob);
-                } catch (ConcurrentModificationException e) {
-                    System.out.println("ConcurrentModificationException whatever that means.");
-                }
+                readyQueue.add(upcomingJob);
+                //Means that the job now in readyQueue needs to wait for a block to open so no jobs need to be generated after this one.
                 if (upcomingJob.size > this.getLargestOpenBlock().size) {
                     break;
                 }
@@ -90,13 +81,11 @@ abstract public class StorageStrategy {
             }
         }
         if(readyQueue.peek() != null){
-            //time.returnToPresent();
             processReadyQueue();
         }
     }
-
+    //Moves jobs into memory from readyQueue
     public void processReadyQueue(){
-        //Moves jobs to memory from ready Queue
         while(readyQueue.size() > 0){
             //adds job to memory if there is an open block.
             if(readyQueue.peek().size <= this.getLargestOpenBlock().size){
@@ -157,7 +146,7 @@ abstract public class StorageStrategy {
             }
         }
     }
-
+    //Helper method that is used to pass memory to the measurement class to calculate statistics.
     public static ArrayList<Block> getMemory(){
         return memory;
     }
