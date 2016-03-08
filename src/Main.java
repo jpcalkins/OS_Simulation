@@ -14,18 +14,21 @@ public class Main {
 
     public static void main(String[] args) {
         if(args.length < 1){
-            System.out.println("How to use program.");
+            System.out.println("Run the program with a b flag to simulate best-fit storage strategy.\nRun the program with a w flag to simulate worst-fit storage strategy.\nRun the program with a f flag to simulate first-fit storage strategy.");
         } else if (args[0].toLowerCase().equals("b")) {
+            System.out.println("Best-fit memory allocation simulation");
             bestFit = new BestFitStorage();
             bestFit.startComputer();
         } else if (args[0].toLowerCase().equals("f")) {
+            System.out.println("First-fit memory allocation simulation");
             firstFit = new FirstFitStorage();
             firstFit.startComputer();
         } else if (args[0].toLowerCase().equals("w")) {
+            System.out.println("Worst-fit memory allocation simulation");
             worstFit = new WorstFitStorage();
             worstFit.startComputer();
         } else {
-            System.out.println("How to use program.");
+            System.out.println("Run the program with a b flag to simulate best-fit storage strategy.\nRun the program with a w flag to simulate worst-fit storage strategy.\nRun the program with a f flag to simulate first-fit storage strategy.");
         }
     }
 }

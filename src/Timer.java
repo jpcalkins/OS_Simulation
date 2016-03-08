@@ -1,9 +1,4 @@
 /**
- * a. Jacob Calkins
- * b. CS 4323
- * c. Simulation Project, Phase 1
- * d. Sarath Kumar Maddinani
- * e. currentTime keeps track of the CPU events; previousTime keeps track of memory events; stats tracks memory management statistics.
  * f. Class works as CPU clock but gives 2 time lines for event-based timing.
  */
 public class Timer {
@@ -19,15 +14,18 @@ public class Timer {
         this.previousTime = 0;
         this.stats = new Measurement();
     }
+
     public int getCurrentTime(){
         return this.currentTime;
     }
     public int getPreviousTime(){
         return this.previousTime;
     }
+    //f. Increments CPU timeline
     public void incrementCurrentTime(int increment){
         this.currentTime += increment;
     }
+    //f. Increments memory timeline and outputs any statistics if time has passed a necessary interval.
     public void incrementPrevTime(int increment){
         //This chain of ifs help me establish if time has passed a moment when statistics need to be printed.
         if(previousTime + increment >= 5000){
@@ -56,6 +54,7 @@ public class Timer {
             System.out.println("ERROR! previous time has exceeded current time.");
         }
     }
+    //f. Sets memory timeline equla to CPU timeline.
     public void returnToPresent(){
         //Sets memory timeline equal to that of CPU timeline.
         if(previousTime < currentTime){

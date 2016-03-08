@@ -1,9 +1,4 @@
 /**
- * a. Jacob Calkins
- * b. CS 4323
- * c. Simulation Project, Phase 1
- * d. Sarath Kumar Maddinani
- * e. rejectedjobs, totaljobs, totalWaitTime, and totalProcessingTime keeps a running total throughout program operation for means of calculate statistics.
  * f. Class calculates statistics of how memory is utilized.
  */
 import java.util.ArrayList;
@@ -18,21 +13,26 @@ public class Measurement {
     //Smallest possible jobs size, used to calculate external fragmentation.
     private final int SMALLESTJOB = 50;
 
+    //f. Constructs an empty set of stats to measure performance.
     public Measurement(){
         this.rejectedJobs = 0;
         this.totalJobs = 0;
         this.totalWaitTime = 0;
         this.totalProcessingTime = 0;
     }
+    //f. Calculates average wait time of jobs
     public int getAvgWait(){
         return totalWaitTime/totalJobs;
     }
+    //f. Calculates average processing time.
     public int getAvgProcessing(){
         return totalProcessingTime/totalJobs;
     }
+    //f. Calculates average turnaround time.
     public int getAvgTurnaround(){
         return (getAvgProcessing() + getAvgWait());
     }
+    //f. Calculates storage Utilization.
     public int getStorageUtilization(){
         ArrayList<Block> memory = StorageStrategy.getMemory();
         int spaceOccupied = 0;
@@ -44,6 +44,7 @@ public class Measurement {
         //spaceOccupied and totalmemory must be cast to doubles to avoid integer division, multiply by 100 to get percentage, and cast back to int to round to whole number
         return (int)(((double)spaceOccupied/(double)TOTALMEMORY)*100);
     }
+    //f. Calculates external fragmentation
     public int getExternalFragmentation(){
         ArrayList<Block> memory = StorageStrategy.getMemory();
         int fragmentation = 0;
@@ -54,30 +55,31 @@ public class Measurement {
         }
         return fragmentation;
     }
+    //f. Calculates average hole size
     public int getAvgHoleSize(){
         ArrayList<Block> memory = StorageStrategy.getMemory();
         return (TOTALMEMORY/memory.size());
     }
-    //For printing stats at 1000VTU intervals, because 1000 is also a multiple of 100, I print the stats for 100 VTU intervals as well.
+    //f. For printing stats at 1000VTU intervals, because 1000 is also a multiple of 100, I print the stats for 100 VTU intervals as well.
     public void output1000(){
         System.out.println("Rejected Jobs:\t" + rejectedJobs);
         output100();
     }
-    //For printing stats at 100VTU intervals
+    //f. For printing stats at 100VTU intervals
     public void output100(){
         System.out.println("Storage Utilization:\t" + getStorageUtilization() + "%" +
-        "\nExternal Fragmentation:\t" + getExternalFragmentation() +
-        "\nAverage Hole Size:\t" + getAvgHoleSize());
+        "\nExternal Fragmentation:\t" + getExternalFragmentation() + "K bytes" +
+        "\nAverage Hole Size:\t" + getAvgHoleSize() + "K bytes");
     }
-    //For printing stats at 4000VTU time point
+    //f. For printing stats at 4000VTU time point
     public void output4000(){
         System.out.println("Printing stats for time point 4000 VTUs" +
-        "\nAverage Turnaround Time:\t" + getAvgTurnaround() +
-        "\nAverage Wait Time:\t" + getAvgWait() +
-        "\nAverage Processing Time:\t" + getAvgProcessing());
+        "\nAverage Turnaround Time:\t" + getAvgTurnaround()  + " VTUs" +
+        "\nAverage Wait Time:\t" + getAvgWait() + " VTUs" +
+        "\nAverage Processing Time:\t" + getAvgProcessing() + " VTUs");
         output1000();
     }
-    //For printing stats at 5000VTU time point
+    //f. For printing stats at 5000VTU time point
     public void output5000(){
         System.out.println("Rejected Jobs:\t" + rejectedJobs);
     }

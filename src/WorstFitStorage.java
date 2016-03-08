@@ -1,16 +1,11 @@
 /**
- * a. Jacob Calkins
- * b. CS 4323
- * c. Simulation Project, Phase 1
- * d. Sarath Kumar Maddinani
- * e. Inherits from StorageStrategy
  * f. Class that implements a worst-fit memory allocation strategy.
  * g. Sorts memory blocks to make finding the proper open block easier.
  */
 import java.util.Collections;
 
 public class WorstFitStorage extends StorageStrategy {
-    //Sorts memory into ascending order based upon block size, then traverses the list backwards to find the largest, open block to place the job into.
+    //f. Sorts memory into ascending order based upon block size, then traverses the list backwards to find the largest, open block to place the job into.
     public void addJob(Job incomingJob){
         Collections.sort(memory);
         for(int i=(memory.size()-1); i>=0; i--){

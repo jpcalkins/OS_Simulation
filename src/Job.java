@@ -1,13 +1,9 @@
 /**
- * a. Jacob Calkins
- * b. CS 4323
- * c. Simulation Project, Phase 1
- * d. Sarath Kumar Maddinani
- * e. timeStamp is used to id processes and keep track of arrival so they may be executed in that same order.
  * f. This class simulates a process and can create random copies of itself for testing.
  * g. Class could have been named Process, as that is what it is mimicking, but this was already implemented before learning proper terminology.
  */
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
+//import java.util.concurrent.ThreadLocalRandom;
 
 public class Job {
     public int size;
@@ -17,13 +13,8 @@ public class Job {
     //So that I may compute avg. wait time, I only track VTU at which job started waiting then calculate difference from CPU time when processing job.
     public int startWaitTime;
     public long timeStamp;
+    public static Random myRandom = new Random((long)0.009);
 
-//    public Job(int size, int duration, int toa){
-//        this.size = size;
-//        this.duration = duration;
-//        this.toa = toa;
-//        this.timeStamp = System.currentTimeMillis();
-//    }
     public Job(int size, int duration, int toa, int time){
         this.size = size;
         this.duration = duration;
@@ -35,26 +26,26 @@ public class Job {
         this.startWaitTime = time;
     }
 
-    //I pass time to the Random job creator for a timestamp so that I may keep track of when job was added to memory for wait time statistics.
+    //f. I pass time to the Random job creator for a timestamp so that I may keep track of when job was added to memory for wait time statistics.
     public static Job randJob(int time){
         return new Job(randSize(), randDuration(), randTOA(), time);
     }
-    //public static Job randJob(){
-        //return new Job(randSize(), randDuration(), randTOA());
-    //}
+    //f. returns a number between 50 and 300 for Job sizes
     public static int randSize(){
-        int minSize = 5;
-        int maxSize = 31;
-        return ThreadLocalRandom.current().nextInt(minSize, maxSize)*10;
+        int min = 5;
+        int max = 30;
+        return (myRandom.nextInt(max-min+1)+min) * 10;
     }
+    //f. returns a number between 5 and 60 for Job durations
     public static int randDuration(){
-        int minDuration = 1;
-        int maxDuration = 13;
-        return ThreadLocalRandom.current().nextInt(minDuration, maxDuration)*5;
+        int min = 1;
+        int max = 12;
+        return (myRandom.nextInt(max-min+1)+min) * 5;
     }
+    //f. return a number between 1 and 10 for job time of arrivals.
     public static int randTOA(){
-        int minTOA = 1;
-        int maxTOA = 11;
-        return ThreadLocalRandom.current().nextInt(minTOA, maxTOA);
+        int min = 1;
+        int max = 10;
+        return myRandom.nextInt(max-min+1)+min;
     }
 }
